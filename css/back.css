@@ -3,10 +3,6 @@
   background: transparent!important;
 }
 
-/*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */
-#page-header.post-bg:before {
-  background-color: transparent!important;
-}
 #footer, #footer:before {
     background: transparent!important
 }
