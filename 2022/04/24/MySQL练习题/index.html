@@ -1,0 +1,1031 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>MySQL练习题 | Small-J</title><meta name="keywords" content="MySQL"><meta name="author" content="Small-J"><meta name="copyright" content="Small-J"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MySQL练习题前言：该文章为本人学习MySQL的过程中所做的练习题，题目答案不唯一，本人部分答案并非最优答案，仅供参考。  1-1 找出所有姓“李”的学生姓名、民族和联系电话。题干:找出所有姓“李”的学生姓名、民族和联系电话。 提示：请使用SELECT语句作答。 表结构:定义表结构的SQL语句如下： 123456789101112131415161718192021CREATE TABLE s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL练习题">
+<meta property="og:url" content="http://example.com/2022/04/24/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/index.html">
+<meta property="og:site_name" content="Small-J">
+<meta property="og:description" content="MySQL练习题前言：该文章为本人学习MySQL的过程中所做的练习题，题目答案不唯一，本人部分答案并非最优答案，仅供参考。  1-1 找出所有姓“李”的学生姓名、民族和联系电话。题干:找出所有姓“李”的学生姓名、民族和联系电话。 提示：请使用SELECT语句作答。 表结构:定义表结构的SQL语句如下： 123456789101112131415161718192021CREATE TABLE s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/MySQL-Exercises.gif">
+<meta property="article:published_time" content="2022-04-24T09:22:18.017Z">
+<meta property="article:modified_time" content="2022-04-24T09:21:56.743Z">
+<meta property="article:author" content="Small-J">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/MySQL-Exercises.gif"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/04/24/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL练习题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-24 17:21:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/back.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/static-butterfly/dist/css/index.min.css"><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/MySQL-Exercises.gif')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Small-J</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL练习题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-24T09:22:18.017Z" title="发表于 2022-04-24 17:22:18">2022-04-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-24T09:21:56.743Z" title="更新于 2022-04-24 17:21:56">2022-04-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>23分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL练习题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<h1 id="MySQL练习题"><a href="#MySQL练习题" class="headerlink" title="MySQL练习题"></a>MySQL练习题</h1><h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p><strong>该文章为本人学习MySQL的过程中所做的练习题，题目答案不唯一，本人部分答案并非最优答案，仅供参考。</strong></p>
+<hr>
+<h2 id="1-1-找出所有姓“李”的学生姓名、民族和联系电话。"><a href="#1-1-找出所有姓“李”的学生姓名、民族和联系电话。" class="headerlink" title="1-1 找出所有姓“李”的学生姓名、民族和联系电话。"></a>1-1 找出所有姓“李”的学生姓名、民族和联系电话。</h2><h3 id="题干"><a href="#题干" class="headerlink" title="题干:"></a>题干:</h3><p>找出所有姓“李”的学生姓名、民族和联系电话。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构:"></a>表结构:</h3><p>定义表结构的SQL语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> student (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line"></span><br><span class="line">sname <span class="type">varchar</span>(<span class="number">10</span>) ,</span><br><span class="line"></span><br><span class="line">sex <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">nation <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">pnum <span class="type">char</span>(<span class="number">18</span>) ,</span><br><span class="line"></span><br><span class="line">birth <span class="type">date</span> ,</span><br><span class="line"></span><br><span class="line">phone <span class="type">char</span>(<span class="number">11</span>) ,</span><br><span class="line"></span><br><span class="line">dept <span class="type">varchar</span>(<span class="number">20</span>) ,</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno)</span><br><span class="line"></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例"><a href="#表样例" class="headerlink" title="表样例"></a>表样例</h3><p>上述表结构对应的表样例：</p>
+<p><code>student</code>表：</p>
+<p><img src="https://images.ptausercontent.com/214c212b-d599-4d1b-9c4e-d60f9bb3031d.png" alt="student.png"></p>
+<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>输出样例：</p>
+<p><img src="https://images.ptausercontent.com/6edc0114-9a43-4dba-b00f-15e0992b1de5.png" alt="1-2.png"></p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sname,nation,phone <span class="keyword">from</span> student <span class="keyword">where</span> sname <span class="keyword">like</span> <span class="string">&#x27;李%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-2-查询选修了2门以上课程的学生学号和平均成绩。"><a href="#1-2-查询选修了2门以上课程的学生学号和平均成绩。" class="headerlink" title="1-2 查询选修了2门以上课程的学生学号和平均成绩。"></a>1-2 查询选修了2门以上课程的学生学号和平均成绩。</h2><h3 id="题干-1"><a href="#题干-1" class="headerlink" title="题干:"></a>题干:</h3><p>查询选修了2门以上课程的学生学号和平均成绩。</p>
+<p>提示：请使用SELECT语句作答，平均成绩四舍五入，保留1位有效数字。</p>
+<h3 id="表结构-1"><a href="#表结构-1" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> score (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">cno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">term <span class="type">varchar</span>(<span class="number">15</span>),</span><br><span class="line"></span><br><span class="line">grade <span class="type">int</span>(<span class="number">11</span>),</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno,cno)</span><br><span class="line"></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-1"><a href="#表样例-1" class="headerlink" title="表样例"></a>表样例</h3><p>上述表结构对应的表样例，部分数据如下：</p>
+<p><code>score</code>表：</p>
+<p><img src="https://images.ptausercontent.com/636db679-91b8-4842-a248-beca695aea5c.png" alt="score.png"></p>
+<h3 id="输出样例-1"><a href="#输出样例-1" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>输出样例：</p>
+<p><img src="https://images.ptausercontent.com/288b54a8-d3c1-4716-b104-2a06a4202ef5.png" alt="2-3.png"></p>
+<h2 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sno <span class="keyword">as</span> <span class="string">&#x27;学号&#x27;</span>,round(<span class="built_in">avg</span>(grade),<span class="number">1</span>) <span class="keyword">as</span> <span class="string">&#x27;平均成绩&#x27;</span> <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> sno <span class="keyword">having</span> <span class="built_in">count</span>(cno) <span class="operator">&gt;=</span> <span class="number">2</span>;  <span class="comment">-- round四舍五入函数</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-3-统计每种商品的销售数量。"><a href="#1-3-统计每种商品的销售数量。" class="headerlink" title="1-3 统计每种商品的销售数量。"></a>1-3 <strong>统计每种商品的销售数量。</strong></h2><h3 id="题干-2"><a href="#题干-2" class="headerlink" title="题干:"></a>题干:</h3><p>统计每种商品的销售数量。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-2"><a href="#表结构-2" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> recorder(</span><br><span class="line"></span><br><span class="line">id <span class="type">INT</span> <span class="keyword">PRIMARY</span> KEY AUTO_INCREMENT,</span><br><span class="line"></span><br><span class="line">cid <span class="type">CHAR</span>(<span class="number">4</span>),</span><br><span class="line"></span><br><span class="line">gid <span class="type">CHAR</span>(<span class="number">4</span>),</span><br><span class="line"></span><br><span class="line">quantity <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">sale_date DATETIME,</span><br><span class="line"></span><br><span class="line"><span class="keyword">CONSTRAINT</span> salrecorder_cid_fk <span class="keyword">FOREIGN</span> KEY (cid) <span class="keyword">REFERENCES</span> customer(cid),</span><br><span class="line"></span><br><span class="line"><span class="keyword">CONSTRAINT</span> salrecorder_gid_fk <span class="keyword">FOREIGN</span> KEY (gid) <span class="keyword">REFERENCES</span> good(gid)</span><br><span class="line"></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-2"><a href="#表样例-2" class="headerlink" title="表样例"></a>表样例</h3><p>上述表结构对应的表样例：</p>
+<p><code>recorder</code>表：</p>
+<p><img src="https://images.ptausercontent.com/12197a3e-1964-4ad0-b5e1-383ace95b6a2.png" alt="recorder.png"></p>
+<h3 id="输出样例-2"><a href="#输出样例-2" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>输出样例：</p>
+<p><img src="https://images.ptausercontent.com/873f25be-5526-4997-8659-4b417f3efb66.png" alt="4-4.png"></p>
+<h2 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> gid <span class="keyword">as</span> <span class="string">&#x27;商品编号&#x27;</span>,<span class="built_in">sum</span>(quantity) <span class="keyword">as</span> <span class="string">&#x27;销售总数量&#x27;</span> <span class="keyword">from</span> recorder <span class="keyword">group</span> <span class="keyword">by</span> gid;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-4-查询前3门课程的课号及课程名称"><a href="#1-4-查询前3门课程的课号及课程名称" class="headerlink" title="1-4 查询前3门课程的课号及课程名称"></a>1-4 <strong>查询前3门课程的课号及课程名称</strong></h2><p>本题目要求编写SQL语句，<br>检索出<code>course</code>表中前3门课程的课号及课程名称的记录。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-3"><a href="#表结构-3" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> course (</span><br><span class="line"> cno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line"> cname <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  cpno <span class="type">char</span>(<span class="number">7</span>),</span><br><span class="line">  ccredit <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (cno)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-3"><a href="#表样例-3" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>course</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>cno</th>
+<th>cname</th>
+<th>cpno</th>
+<th>ccredit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000001</td>
+<td>数据库OCP考证</td>
+<td></td>
+<td>4</td>
+</tr>
+<tr>
+<td>0000002</td>
+<td>C语言基础</td>
+<td>0000027</td>
+<td>9</td>
+</tr>
+<tr>
+<td>0000003</td>
+<td>Linux操作系统</td>
+<td>0000013</td>
+<td>5</td>
+</tr>
+<tr>
+<td>0000004</td>
+<td>C#程序设计</td>
+<td>0000002</td>
+<td>6</td>
+</tr>
+</tbody></table>
+<h3 id="输出样例-3"><a href="#输出样例-3" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>请在这里给出输出样例。例如：</p>
+<table>
+<thead>
+<tr>
+<th>cno</th>
+<th>cname</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000001</td>
+<td>数据库OCP考证</td>
+</tr>
+<tr>
+<td>0000002</td>
+<td>C语言基础</td>
+</tr>
+<tr>
+<td>0000003</td>
+<td>Linux操作系统</td>
+</tr>
+</tbody></table>
+<h2 id="代码：-3"><a href="#代码：-3" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cno,cname <span class="keyword">from</span> course limit <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-5-查询名字中含有“明”字的男生的学生姓名和班级"><a href="#1-5-查询名字中含有“明”字的男生的学生姓名和班级" class="headerlink" title="1-5 查询名字中含有“明”字的男生的学生姓名和班级"></a>1-5 <strong>查询名字中含有“明”字的男生的学生姓名和班级</strong></h2><p>本题目要求编写SQL语句，<br>检索出<code>students</code>表中姓名中含有“明”字的男生的学生姓名和班级。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-4"><a href="#表结构-4" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> students (</span><br><span class="line"> sno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line">  sname <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  class <span class="type">char</span>(<span class="number">10</span>),</span><br><span class="line">  ssex <span class="type">char</span>(<span class="number">2</span>),</span><br><span class="line">  bday <span class="type">date</span> ,</span><br><span class="line">  bplace <span class="type">char</span>(<span class="number">10</span>) ,</span><br><span class="line">  IDNum <span class="type">char</span>(<span class="number">18</span>) ,</span><br><span class="line">  sdept <span class="type">char</span>(<span class="number">16</span>),</span><br><span class="line">  phone <span class="type">char</span>(<span class="number">11</span>),</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (sno)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-4"><a href="#表样例-4" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>students</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>sname</th>
+<th>class</th>
+<th>ssex</th>
+<th>bday</th>
+<th>bplace</th>
+<th>IDNum</th>
+<th>sdept</th>
+<th>phone</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1311104</td>
+<td>李嘉欣</td>
+<td>13英语1</td>
+<td>女</td>
+<td>1994-05-28</td>
+<td>山西太原</td>
+<td>330204199405281056</td>
+<td>人文学院</td>
+<td>15900002211</td>
+</tr>
+<tr>
+<td>1311105</td>
+<td>苏有明</td>
+<td>13英语1</td>
+<td>男</td>
+<td>1995-04-16</td>
+<td>内蒙古包头</td>
+<td>330204199504162036</td>
+<td>人文学院</td>
+<td>15900002222</td>
+</tr>
+<tr>
+<td>1711101</td>
+<td>赵薇</td>
+<td>17物流1</td>
+<td>女</td>
+<td>1999-02-11</td>
+<td>安徽合肥</td>
+<td>330203199902110925</td>
+<td>经管学院</td>
+<td>15900001177</td>
+</tr>
+<tr>
+<td>1711102</td>
+<td>董洁</td>
+<td>17物流1</td>
+<td>女</td>
+<td>1999-02-17</td>
+<td>上海</td>
+<td>330203199902170017</td>
+<td>经管学院</td>
+<td>15900001188</td>
+</tr>
+</tbody></table>
+<h3 id="输出样例-4"><a href="#输出样例-4" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>请在这里给出输出样例。例如：</p>
+<table>
+<thead>
+<tr>
+<th>sname</th>
+<th>class</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>苏有明</td>
+<td>13英语1</td>
+</tr>
+</tbody></table>
+<h2 id="代码：-4"><a href="#代码：-4" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sname,class <span class="keyword">from</span> students <span class="keyword">where</span> sname <span class="keyword">like</span> <span class="string">&#x27;%明%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-6-查询姓名是两个字的学生信息"><a href="#1-6-查询姓名是两个字的学生信息" class="headerlink" title="1-6 查询姓名是两个字的学生信息"></a>1-6 <strong>查询姓名是两个字的学生信息</strong></h2><p>本题目要求编写SQL语句，<br>检索出<code>students</code>表中姓名是两个字的学生信息。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-5"><a href="#表结构-5" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> students (</span><br><span class="line"> sno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line">  sname <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  class <span class="type">char</span>(<span class="number">10</span>),</span><br><span class="line">  ssex <span class="type">char</span>(<span class="number">2</span>),</span><br><span class="line">  bday <span class="type">date</span> ,</span><br><span class="line">  bplace <span class="type">char</span>(<span class="number">10</span>) ,</span><br><span class="line">  IDNum <span class="type">char</span>(<span class="number">18</span>) ,</span><br><span class="line">  sdept <span class="type">char</span>(<span class="number">16</span>),</span><br><span class="line">  phone <span class="type">char</span>(<span class="number">11</span>),</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (sno)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-5"><a href="#表样例-5" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>students</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>sname</th>
+<th>class</th>
+<th>ssex</th>
+<th>bday</th>
+<th>bplace</th>
+<th>IDNum</th>
+<th>sdept</th>
+<th>phone</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1311104</td>
+<td>李嘉欣</td>
+<td>13英语1</td>
+<td>女</td>
+<td>1994-05-28</td>
+<td>山西太原</td>
+<td>330204199405281056</td>
+<td>人文学院</td>
+<td>15900002211</td>
+</tr>
+<tr>
+<td>1311105</td>
+<td>苏有明</td>
+<td>13英语1</td>
+<td>男</td>
+<td>1995-04-16</td>
+<td>内蒙古包头</td>
+<td>330204199504162036</td>
+<td>人文学院</td>
+<td>15900002222</td>
+</tr>
+<tr>
+<td>1711101</td>
+<td>赵薇</td>
+<td>17物流1</td>
+<td>女</td>
+<td>1999-02-11</td>
+<td>安徽合肥</td>
+<td>330203199902110925</td>
+<td>经管学院</td>
+<td>15900001177</td>
+</tr>
+<tr>
+<td>1711102</td>
+<td>董洁</td>
+<td>17物流1</td>
+<td>女</td>
+<td>1999-02-17</td>
+<td>上海</td>
+<td>330203199902170017</td>
+<td>经管学院</td>
+<td>15900001188</td>
+</tr>
+</tbody></table>
+<h3 id="输出样例-5"><a href="#输出样例-5" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>请在这里给出输出样例。例如：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>sname</th>
+<th>class</th>
+<th>ssex</th>
+<th>bday</th>
+<th>bplace</th>
+<th>IDNum</th>
+<th>sdept</th>
+<th>phone</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1711101</td>
+<td>赵薇</td>
+<td>17物流1</td>
+<td>女</td>
+<td>1999-02-11</td>
+<td>安徽合肥</td>
+<td>330203199902110925</td>
+<td>经管学院</td>
+<td>15900001177</td>
+</tr>
+<tr>
+<td>1711102</td>
+<td>董洁</td>
+<td>17物流1</td>
+<td>女</td>
+<td>1999-02-17</td>
+<td>上海</td>
+<td>330203199902170017</td>
+<td>经管学院</td>
+<td>15900001188</td>
+</tr>
+</tbody></table>
+<h2 id="代码：-5"><a href="#代码：-5" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> students <span class="keyword">where</span> sname <span class="keyword">like</span> <span class="string">&#x27;__&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-7-计算“0000001”课程的平均分、最高分和最低分"><a href="#1-7-计算“0000001”课程的平均分、最高分和最低分" class="headerlink" title="1-7 计算“0000001”课程的平均分、最高分和最低分"></a>1-7 <strong>计算“0000001”课程的平均分、最高分和最低分</strong></h2><p>本题目要求编写SQL语句，<br>计算&#96;&#96;sc&#96;&#96;&#96;表中“0000001”课程的平均分、最高分和最低分，要求结果中列名分别显示“平均分”、“最高分”、“最低分”。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-6"><a href="#表结构-6" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sc (</span><br><span class="line"> sno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line"> cno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line">  score <span class="type">decimal</span>(<span class="number">4</span>,<span class="number">1</span>),</span><br><span class="line">    point <span class="type">decimal</span>(<span class="number">2</span>,<span class="number">1</span>),</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (sno,cno)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-6"><a href="#表样例-6" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>sc</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>cno</th>
+<th>score</th>
+<th>point</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1711202</td>
+<td>0000001</td>
+<td>53.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>1711202</td>
+<td>0000027</td>
+<td>80.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1911201</td>
+<td>0000001</td>
+<td>84.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1911201</td>
+<td>0000052</td>
+<td>71.0</td>
+<td>2.0</td>
+</tr>
+</tbody></table>
+<h3 id="输出样例-6"><a href="#输出样例-6" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>请在这里给出输出样例。例如：</p>
+<table>
+<thead>
+<tr>
+<th>平均分</th>
+<th>最高分</th>
+<th>最低分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>68.50000</td>
+<td>84.0</td>
+<td>53.0</td>
+</tr>
+</tbody></table>
+<h2 id="代码：-6"><a href="#代码：-6" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">avg</span>(score) <span class="keyword">as</span> <span class="string">&#x27;平均分&#x27;</span>,<span class="built_in">max</span>(score) <span class="keyword">as</span> <span class="string">&#x27;最高分&#x27;</span>,<span class="built_in">min</span>(score) <span class="keyword">as</span> <span class="string">&#x27;最低分&#x27;</span> <span class="keyword">from</span> sc <span class="keyword">where</span> cno<span class="operator">=</span><span class="string">&#x27;0000001&#x27;</span> <span class="keyword">group</span> <span class="keyword">by</span> cno;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-8-统计每个学生的选课门数和考试总成绩，并按选课门数升序排列"><a href="#1-8-统计每个学生的选课门数和考试总成绩，并按选课门数升序排列" class="headerlink" title="1-8 统计每个学生的选课门数和考试总成绩，并按选课门数升序排列"></a>1-8 <strong>统计每个学生的选课门数和考试总成绩，并按选课门数升序排列</strong></h2><p>本题目要求编写SQL语句，<br>统计&#96;&#96;sc&#96;&#96;&#96;表中，每个学生的选课门数和考试总成绩，并按选课门数升序排列，要求结果中列名分别显示”学号“、“选课门数”、“考试总成绩”。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-7"><a href="#表结构-7" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sc (</span><br><span class="line"> sno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line"> cno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line">  score <span class="type">decimal</span>(<span class="number">4</span>,<span class="number">1</span>),</span><br><span class="line">    point <span class="type">decimal</span>(<span class="number">2</span>,<span class="number">1</span>),</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (sno,cno)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-7"><a href="#表样例-7" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>sc</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>cno</th>
+<th>score</th>
+<th>point</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1711202</td>
+<td>0000011</td>
+<td>53.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>1711202</td>
+<td>0000027</td>
+<td>80.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1711202</td>
+<td>0000052</td>
+<td>77.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1911201</td>
+<td>0000027</td>
+<td>84.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1911201</td>
+<td>0000052</td>
+<td>71.0</td>
+<td>2.0</td>
+</tr>
+</tbody></table>
+<h3 id="输出样例-7"><a href="#输出样例-7" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>请在这里给出输出样例。例如：</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>选课门数</th>
+<th>考试总成绩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1911201</td>
+<td>2</td>
+<td>155.0</td>
+</tr>
+<tr>
+<td>1711202</td>
+<td>3</td>
+<td>210.0</td>
+</tr>
+</tbody></table>
+<h2 id="代码：-7"><a href="#代码：-7" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sno <span class="keyword">as</span> <span class="string">&#x27;学号&#x27;</span>,<span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> <span class="string">&#x27;选课门数&#x27;</span>,<span class="built_in">sum</span>(score) <span class="keyword">as</span> <span class="string">&#x27;考试总成绩&#x27;</span> <span class="keyword">from</span> sc <span class="keyword">group</span> <span class="keyword">by</span> sno;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-9-显示截止到2021年9月1日为止年满24周岁的男学生信息。"><a href="#1-9-显示截止到2021年9月1日为止年满24周岁的男学生信息。" class="headerlink" title="1-9 显示截止到2021年9月1日为止年满24周岁的男学生信息。"></a>1-9 <strong>显示截止到2021年9月1日为止年满24周岁的男学生信息。</strong></h2><p>显示截止到2021年9月1日为止年满24周岁的男学生信息。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-8"><a href="#表结构-8" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> student (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line"></span><br><span class="line">sname <span class="type">varchar</span>(<span class="number">10</span>) ,</span><br><span class="line"></span><br><span class="line">sex <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">nation <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">pnum <span class="type">char</span>(<span class="number">18</span>) ,</span><br><span class="line"></span><br><span class="line">birth <span class="type">date</span> ,</span><br><span class="line"></span><br><span class="line">phone <span class="type">char</span>(<span class="number">11</span>) ,</span><br><span class="line"></span><br><span class="line">dept <span class="type">varchar</span>(<span class="number">20</span>) ,</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno)</span><br><span class="line"></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-8"><a href="#表样例-8" class="headerlink" title="表样例"></a>表样例</h3><p><code>student</code>表：</p>
+<p><img src="https://images.ptausercontent.com/bb501d79-ad5e-4b3b-a24b-7bf630d888fc.png" alt="student.png"></p>
+<h3 id="输出样例-8"><a href="#输出样例-8" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/815caa54-8dae-4658-83f5-d89f29051c34.png" alt="5-6.png"></p>
+<h2 id="代码：-8"><a href="#代码：-8" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">where</span> sex <span class="operator">=</span> <span class="string">&#x27;男&#x27;</span> <span class="keyword">and</span> TIMESTAMPDIFF(<span class="keyword">year</span>,birth,<span class="string">&#x27;2021-09-01&#x27;</span>) <span class="operator">&gt;=</span><span class="number">24</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-10-查询商品表，先按商品分类升序排列，再按商品价格降序排列"><a href="#1-10-查询商品表，先按商品分类升序排列，再按商品价格降序排列" class="headerlink" title="1-10 查询商品表，先按商品分类升序排列，再按商品价格降序排列"></a>1-10 <strong>查询商品表，先按商品分类升序排列，再按商品价格降序排列</strong></h2><p>本题目要求编写SQL语句，查询<code>sh_goods</code>表，先按商品分类<code>category_id</code>升序排列，对于相同分类的商品再按商品价格<code>price</code>降序排列 。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-9"><a href="#表结构-9" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-9"><a href="#表样例-9" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/17e69781-c3b6-424e-89ec-48dc00ba3d79.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-9"><a href="#输出样例-9" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/5072deec-3bb6-42f1-8b32-89b1cb0bc7f4.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-9"><a href="#代码：-9" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name,category_id,price <span class="keyword">from</span> sh_goods <span class="keyword">order</span> <span class="keyword">by</span> category_id,price <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-11-查询商品表中每项关键词对应的商品数量"><a href="#1-11-查询商品表中每项关键词对应的商品数量" class="headerlink" title="1-11 查询商品表中每项关键词对应的商品数量"></a>1-11 <strong>查询商品表中每项关键词对应的商品数量</strong></h2><p>本题目要求编写SQL语句，<br>检索出<code>sh_goods</code>表中每项<code>keyword</code>对应的商品数量，查询结果显示字段依据输出样例设置。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-10"><a href="#表结构-10" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-10"><a href="#表样例-10" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/2ff8eac2-7c7b-4476-b5ec-eb26c0fc0584.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-10"><a href="#输出样例-10" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/e7c1c6e1-6ef8-40f7-80f7-e881862092ca.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-10"><a href="#代码：-10" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> keyword,<span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> goodscount <span class="keyword">from</span> sh_goods <span class="keyword">group</span> <span class="keyword">by</span> keyword;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-12-查询商品表中部分字段"><a href="#1-12-查询商品表中部分字段" class="headerlink" title="1-12 查询商品表中部分字段"></a>1-12 <strong>查询商品表中部分字段</strong></h2><p>本题目要求编写SQL语句，查询<code>sh_goods</code>表中<code>id</code>、<code>category_id</code>和<code>name</code>字段。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-11"><a href="#表结构-11" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-11"><a href="#表样例-11" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/af38f5c4-8594-4adf-a08f-290ee2c02706.PNG" alt="样例1.PNG"></p>
+<h3 id="输出样例-11"><a href="#输出样例-11" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/0582be2f-2df9-4411-b5ab-199372672049.PNG" alt="样例2.PNG"></p>
+<h2 id="代码：-11"><a href="#代码：-11" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id,category_id,name <span class="keyword">from</span> sh_goods;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-13-获取每个分类下商品的最高价格"><a href="#1-13-获取每个分类下商品的最高价格" class="headerlink" title="1-13 获取每个分类下商品的最高价格"></a>1-13 <strong>获取每个分类下商品的最高价格</strong></h2><p>本题目要求编写SQL语句，<br>获取<code>sh_goods</code>表中每个分类下商品的最高价格。查询结果显示字段依据输出样例设置。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-12"><a href="#表结构-12" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-12"><a href="#表样例-12" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/96eb7e48-6573-4004-99de-4ee42dc6df0c.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-12"><a href="#输出样例-12" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/ef8652a3-51b5-4e9f-85e7-4cb89d2843a6.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-12"><a href="#代码：-12" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> category_id,<span class="built_in">max</span>(price) <span class="keyword">as</span> max_price <span class="keyword">from</span> sh_goods <span class="keyword">group</span> <span class="keyword">by</span> category_id;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-14-查询商品表中商品库存的最高和最低值"><a href="#1-14-查询商品表中商品库存的最高和最低值" class="headerlink" title="1-14 查询商品表中商品库存的最高和最低值"></a>1-14 <strong>查询商品表中商品库存的最高和最低值</strong></h2><p>本题目要求编写SQL语句，<br>查询<code>sh_goods</code>表中商品库存<code>stock</code>的最高和最低值。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-13"><a href="#表结构-13" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-13"><a href="#表样例-13" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/09c2a1d6-1f93-4ca3-8c5e-bbb854b0b9c6.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-13"><a href="#输出样例-13" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/a77370ac-c68b-4504-bac1-346f6a4b95ee.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-13"><a href="#代码：-13" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">max</span>(stock) <span class="keyword">as</span> stock1,<span class="built_in">min</span>(stock) <span class="keyword">as</span> stock2 <span class="keyword">from</span> sh_goods;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-15-获取指定条件商品的平均价格"><a href="#1-15-获取指定条件商品的平均价格" class="headerlink" title="1-15 获取指定条件商品的平均价格"></a>1-15 <strong>获取指定条件商品的平均价格</strong></h2><p>本题目要求编写SQL语句，<br>在<code>sh_goods</code>表中查询不同商品分类（<code>category_id</code>）下商品数量大于2的商品的平均价格。查询结果显示字段依据输出样例设置。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-14"><a href="#表结构-14" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-14"><a href="#表样例-14" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/7dd0ff9a-0621-4670-8ee0-814e943673d7.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-14"><a href="#输出样例-14" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/aebd22da-0b3b-4a63-b75d-e25abab04dc2.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-14"><a href="#代码：-14" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> category_id,<span class="built_in">avg</span>(price) <span class="keyword">as</span> average <span class="keyword">from</span> sh_goods <span class="keyword">group</span> <span class="keyword">by</span> category_id <span class="keyword">having</span> <span class="built_in">count</span>(<span class="operator">*</span>)<span class="operator">&gt;</span><span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-16-商品表查询语句中运算符的使用"><a href="#1-16-商品表查询语句中运算符的使用" class="headerlink" title="1-16 商品表查询语句中运算符的使用"></a>1-16 <strong>商品表查询语句中运算符的使用</strong></h2><p>本题目要求编写SQL语句，<br>在<code>sh_goods</code>表中，查询5星好评的商品库存增加850后的值，以及这些商品进行75折促销后的价格。查询结果显示字段依据输出样例设置。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-15"><a href="#表结构-15" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-15"><a href="#表样例-15" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/c67dd734-8b01-4474-856f-e511b0e5af80.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-15"><a href="#输出样例-15" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/d8cd14c4-5563-44da-a3f3-21a5f980c7c9.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-15"><a href="#代码：-15" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name,price old_price,stock old_stock,price<span class="operator">*</span><span class="number">0.75</span> new_price,stock<span class="operator">+</span><span class="number">850</span> new_stock <span class="keyword">from</span> sh_goods <span class="keyword">where</span> score <span class="operator">=</span> <span class="number">5.00</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-17-查询商品表中指定价格范围的商品信息"><a href="#1-17-查询商品表中指定价格范围的商品信息" class="headerlink" title="1-17 查询商品表中指定价格范围的商品信息"></a>1-17 <strong>查询商品表中指定价格范围的商品信息</strong></h2><p>本题目要求编写SQL语句，<br>查询<code>sh_goods</code>表中价格在2000到6000元之间的商品编号、名称和价格，注意此范围包括2000元和6000元的商品。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-16"><a href="#表结构-16" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-16"><a href="#表样例-16" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/a64fa37a-2200-4042-867f-f9894068093a.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-16"><a href="#输出样例-16" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/c9a63be5-af8f-4660-9c33-c9b8b74de473.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-16"><a href="#代码：-16" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id,name,price <span class="keyword">from</span> sh_goods <span class="keyword">where</span> price <span class="keyword">between</span> <span class="number">2000</span> <span class="keyword">and</span> <span class="number">6000</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-18-商品表中判断字段是否为NULL"><a href="#1-18-商品表中判断字段是否为NULL" class="headerlink" title="1-18 商品表中判断字段是否为NULL"></a>1-18 <strong>商品表中判断字段是否为NULL</strong></h2><p>本题目要求编写SQL语句，<br>查询<code>goods</code>表中价格为NULL的商品信息。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-17"><a href="#表结构-17" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> goods</span><br><span class="line"> (</span><br><span class="line">    id <span class="type">INT</span> <span class="keyword">PRIMARY</span> key,         <span class="comment">--商品id</span></span><br><span class="line">    name <span class="type">VARCHAR</span>(<span class="number">32</span>),           <span class="comment">--商品名称</span></span><br><span class="line">    price <span class="type">INT</span> ,                 <span class="comment">--商品价格</span></span><br><span class="line">    description <span class="type">VARCHAR</span>(<span class="number">255</span>)    <span class="comment">-- 商品描述</span></span><br><span class="line"> );</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-17"><a href="#表样例-17" class="headerlink" title="表样例"></a>表样例</h3><p><code>goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/eff48a76-0e53-4b9e-b7d2-f3da1b1111f6.PNG" alt="样例1.PNG"></p>
+<h3 id="输出样例-17"><a href="#输出样例-17" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/adf4f32d-07a3-4511-abfa-abcb4d801ebe.PNG" alt="样例2.PNG"></p>
+<h2 id="代码：-17"><a href="#代码：-17" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id,name,price <span class="keyword">from</span> goods <span class="keyword">where</span> price <span class="keyword">is</span> <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-19-获取商品表中商品名称含有“pad”的商品"><a href="#1-19-获取商品表中商品名称含有“pad”的商品" class="headerlink" title="1-19 获取商品表中商品名称含有“pad”的商品"></a>1-19 <strong>获取商品表中商品名称含有“pad”的商品</strong></h2><p>本题目要求编写SQL语句，<br>获取<code>goods</code>表中商品名称含有“pad”的商品。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-18"><a href="#表结构-18" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE goods</span><br><span class="line"> (</span><br><span class="line">    id INT PRIMARY key,         --商品id</span><br><span class="line">    name VARCHAR(32),           --商品名称</span><br><span class="line">    price INT ,                 --商品价格</span><br><span class="line">    description VARCHAR(255)    -- 商品描述</span><br><span class="line"> );</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-18"><a href="#表样例-18" class="headerlink" title="表样例"></a>表样例</h3><p><code>goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/d2238b63-d802-42b0-9039-0f69ad482688.PNG" alt="样例1.PNG"></p>
+<h3 id="输出样例-18"><a href="#输出样例-18" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/178c5afe-5f2a-4c9e-8a83-92cc1f160827.PNG" alt="样例2.PNG"></p>
+<h2 id="代码：-18"><a href="#代码：-18" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id,name,price <span class="keyword">from</span> goods <span class="keyword">where</span> name <span class="keyword">like</span> <span class="string">&#x27;%pad%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-19-查询商品表中指定条件的商品信息（多条件查询）"><a href="#1-19-查询商品表中指定条件的商品信息（多条件查询）" class="headerlink" title="1-19 查询商品表中指定条件的商品信息（多条件查询）"></a>1-19 <strong>查询商品表中指定条件的商品信息（多条件查询）</strong></h2><p>本题目要求编写SQL语句，<br>查询<code>sh_goods</code>表中商品分类编号（<code>category_id</code>）为3，并且用户评分为5星的商品信息。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-19"><a href="#表结构-19" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-19"><a href="#表样例-19" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/7902d0ac-ed6d-4cb4-9f93-af76ae30d3de.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-19"><a href="#输出样例-19" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/5cc0cf84-3d89-4407-ad21-63c0a9e866f4.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-19"><a href="#代码：-19" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id,name,price <span class="keyword">from</span> sh_goods <span class="keyword">where</span> category_id <span class="operator">=</span> <span class="number">3</span> <span class="keyword">and</span> score <span class="operator">=</span> <span class="number">5.00</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-21查询商品表中指定条件的商品信息（多条件查询）"><a href="#1-21查询商品表中指定条件的商品信息（多条件查询）" class="headerlink" title="1-21查询商品表中指定条件的商品信息（多条件查询）"></a>1-21<strong>查询商品表中指定条件的商品信息（多条件查询）</strong></h2><p>本题目要求编写SQL语句，<br>查询<code>sh_goods</code>表中用户评分为4.5或者价格小于10元的商品信息。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-20"><a href="#表结构-20" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sh_goods (</span><br><span class="line">  id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,                         <span class="comment">--商品id</span></span><br><span class="line">  category_id <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,        <span class="comment">-- 商品分类id</span></span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">120</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,                  <span class="comment">--商品名称</span></span><br><span class="line">  keyword <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,               <span class="comment">-- 关键词编号</span></span><br><span class="line">  content TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,                      <span class="comment">--商品详情</span></span><br><span class="line">  price <span class="type">DECIMAL</span>(<span class="number">10</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,   <span class="comment">--价格</span></span><br><span class="line">  stock <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 库存</span></span><br><span class="line">  score <span class="type">DECIMAL</span>(<span class="number">3</span>, <span class="number">2</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> ,    <span class="comment">-- 用户评分</span></span><br><span class="line">  comment_count <span class="type">INT</span>  <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>        <span class="comment">-- 评论数量</span></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-20"><a href="#表样例-20" class="headerlink" title="表样例"></a>表样例</h3><p><code>sh_goods</code>表：</p>
+<p><img src="https://images.ptausercontent.com/a7e03894-0606-49bf-a0e5-3b4adbec7736.PNG" alt="sh_goods表数据.PNG"></p>
+<h3 id="输出样例-20"><a href="#输出样例-20" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/41a09c40-73b9-4028-8221-1c6ad199333a.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-20"><a href="#代码：-20" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name,price,score <span class="keyword">from</span> sh_goods <span class="keyword">where</span> score <span class="operator">=</span> <span class="number">4.50</span> <span class="keyword">or</span> price <span class="operator">&lt;</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-22-统计每个学院的学生总人数，并按人数降序排列。"><a href="#1-22-统计每个学院的学生总人数，并按人数降序排列。" class="headerlink" title="1-22 统计每个学院的学生总人数，并按人数降序排列。"></a>1-22 <strong>统计每个学院的学生总人数，并按人数降序排列。</strong></h2><h3 id="题干-3"><a href="#题干-3" class="headerlink" title="题干:"></a>题干:</h3><p>统计每个学院的学生总人数，并按人数降序排列。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-21"><a href="#表结构-21" class="headerlink" title="表结构:"></a>表结构:</h3><p>定义表结构的SQL语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> student (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line"></span><br><span class="line">sname <span class="type">varchar</span>(<span class="number">10</span>) ,</span><br><span class="line"></span><br><span class="line">sex <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">nation <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">pnum <span class="type">char</span>(<span class="number">18</span>) ,</span><br><span class="line"></span><br><span class="line">birth <span class="type">date</span> ,</span><br><span class="line"></span><br><span class="line">phone <span class="type">char</span>(<span class="number">11</span>) ,</span><br><span class="line"></span><br><span class="line">dept <span class="type">varchar</span>(<span class="number">20</span>) ,</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno)</span><br><span class="line"></span><br><span class="line">) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> course (</span><br><span class="line"></span><br><span class="line">cno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">cname <span class="type">varchar</span>(<span class="number">20</span>) ,</span><br><span class="line"></span><br><span class="line">credit <span class="type">int</span>(<span class="number">11</span>) ,</span><br><span class="line"></span><br><span class="line">attribute <span class="type">varchar</span>(<span class="number">10</span>) ,</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (cno)</span><br><span class="line"></span><br><span class="line">) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> score (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">cno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">term <span class="type">varchar</span>(<span class="number">15</span>),</span><br><span class="line"></span><br><span class="line">grade <span class="type">int</span>(<span class="number">11</span>),</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno,cno)</span><br><span class="line"></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-21"><a href="#表样例-21" class="headerlink" title="表样例"></a>表样例</h3><p><code>student</code>表：</p>
+<p><img src="https://images.ptausercontent.com/5ba2c268-ccb2-45c0-9f90-abc1bb915712.png" alt="student.png"></p>
+<p><code>course</code>表：</p>
+<p><img src="https://images.ptausercontent.com/aed71a58-8b5f-431c-8456-8627d6f6275d.png" alt="course.png"></p>
+<p><code>score</code>表：</p>
+<p><img src="https://images.ptausercontent.com/43cc116d-5ab4-4363-91dc-16d79c515e6b.png" alt="score.png"></p>
+<h3 id="输出样例-21"><a href="#输出样例-21" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/51aba08c-3080-412d-9fbf-f6add6358c95.png" alt="6-4.png"></p>
+<h2 id="代码：-21"><a href="#代码：-21" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dept <span class="keyword">as</span> <span class="string">&#x27;院部&#x27;</span>,<span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> <span class="string">&#x27;总人数&#x27;</span> <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> dept <span class="keyword">order</span> <span class="keyword">by</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-23-查询选修了2门以上课程的学生学号和平均成绩。"><a href="#1-23-查询选修了2门以上课程的学生学号和平均成绩。" class="headerlink" title="1-23  查询选修了2门以上课程的学生学号和平均成绩。"></a>1-23  <strong>查询选修了2门以上课程的学生学号和平均成绩。</strong></h2><h3 id="题干-4"><a href="#题干-4" class="headerlink" title="题干:"></a>题干:</h3><p>查询选修了2门以上课程的学生学号和平均成绩。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-22"><a href="#表结构-22" class="headerlink" title="表结构:"></a>表结构:</h3><p>定义表结构的SQL语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> student (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line"></span><br><span class="line">sname <span class="type">varchar</span>(<span class="number">10</span>) ,</span><br><span class="line"></span><br><span class="line">sex <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">nation <span class="type">char</span>(<span class="number">2</span>) ,</span><br><span class="line"></span><br><span class="line">pnum <span class="type">char</span>(<span class="number">18</span>) ,</span><br><span class="line"></span><br><span class="line">birth <span class="type">date</span> ,</span><br><span class="line"></span><br><span class="line">phone <span class="type">char</span>(<span class="number">11</span>) ,</span><br><span class="line"></span><br><span class="line">dept <span class="type">varchar</span>(<span class="number">20</span>) ,</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno)</span><br><span class="line"></span><br><span class="line">) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> course (</span><br><span class="line"></span><br><span class="line">cno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">cname <span class="type">varchar</span>(<span class="number">20</span>) ,</span><br><span class="line"></span><br><span class="line">credit <span class="type">int</span>(<span class="number">11</span>) ,</span><br><span class="line"></span><br><span class="line">attribute <span class="type">varchar</span>(<span class="number">10</span>) ,</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (cno)</span><br><span class="line"></span><br><span class="line">) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> score (</span><br><span class="line"></span><br><span class="line">sno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">cno <span class="type">varchar</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line"></span><br><span class="line">term <span class="type">varchar</span>(<span class="number">15</span>),</span><br><span class="line"></span><br><span class="line">grade <span class="type">int</span>(<span class="number">11</span>),</span><br><span class="line"></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (sno,cno)</span><br><span class="line"></span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-22"><a href="#表样例-22" class="headerlink" title="表样例"></a>表样例</h3><p><code>student</code>表：</p>
+<p><img src="https://images.ptausercontent.com/5ba2c268-ccb2-45c0-9f90-abc1bb915712.png" alt="student.png"></p>
+<p><code>course</code>表：</p>
+<p><img src="https://images.ptausercontent.com/aed71a58-8b5f-431c-8456-8627d6f6275d.png" alt="course.png"></p>
+<p><code>score</code>表：</p>
+<p><img src="https://images.ptausercontent.com/43cc116d-5ab4-4363-91dc-16d79c515e6b.png" alt="score.png"></p>
+<h3 id="输出样例-22"><a href="#输出样例-22" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/bc08cdd8-5087-41d7-8ae8-f6a1e8b2a34f.png" alt="6-6.png"></p>
+<h2 id="代码：-22"><a href="#代码：-22" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sno <span class="keyword">as</span> <span class="string">&#x27;学号&#x27;</span>,<span class="built_in">avg</span>(grade) <span class="keyword">as</span> <span class="string">&#x27;平均分&#x27;</span> <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> sno <span class="keyword">having</span> <span class="built_in">count</span>(cno) <span class="operator">&gt;=</span> <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-24-在教师表中查询出所有教师所在部门编号，并消除重复记录。"><a href="#1-24-在教师表中查询出所有教师所在部门编号，并消除重复记录。" class="headerlink" title="1-24 在教师表中查询出所有教师所在部门编号，并消除重复记录。"></a>1-24 <strong>在教师表中查询出所有教师所在部门编号，并消除重复记录。</strong></h2><p>本题目要求编写SQL语句，在<code>Teacher</code>r表中查询出所有教师所在部门编号，并消除重复记录。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-23"><a href="#表结构-23" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> Teacher(</span><br><span class="line">TeacherID   <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,     <span class="comment">--教师编号</span></span><br><span class="line">Teachername <span class="type">char</span>(<span class="number">12</span>) <span class="keyword">not</span> <span class="keyword">null</span>,       <span class="comment">--教师姓名</span></span><br><span class="line">Sex  <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">check</span>(sex <span class="keyword">in</span>(<span class="string">&#x27;男&#x27;</span>,<span class="string">&#x27;女&#x27;</span>)),  <span class="comment">--教师性别</span></span><br><span class="line">Brith datetime ,                                 <span class="comment">--出生日期</span></span><br><span class="line">Profession <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">check</span>(profession <span class="keyword">in</span>(<span class="string">&#x27;教授&#x27;</span>,<span class="string">&#x27;副教授&#x27;</span>,<span class="string">&#x27;讲师&#x27;</span>,<span class="string">&#x27;助教&#x27;</span>)),  <span class="comment">--职称</span></span><br><span class="line">Telephone <span class="type">varchar</span>(<span class="number">20</span>),                          <span class="comment">--联系电话</span></span><br><span class="line">HomeAddr <span class="type">varchar</span>(<span class="number">50</span>),                           <span class="comment">--家庭地址</span></span><br><span class="line">DepartmentID <span class="type">char</span>(<span class="number">4</span>)                            <span class="comment">--系部编号</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-23"><a href="#表样例-23" class="headerlink" title="表样例"></a>表样例</h3><p><code>Teacher</code>表：</p>
+<p><img src="https://images.ptausercontent.com/e9e1e65f-8459-4174-91d8-7bfaac1f9e3f.PNG" alt="Teacher表.PNG"></p>
+<h3 id="输出样例-23"><a href="#输出样例-23" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/f6db91be-875d-4e19-a563-b833d5caaace.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-23"><a href="#代码：-23" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DepartmentID <span class="keyword">from</span> Teacher <span class="keyword">group</span> <span class="keyword">by</span> DepartmentID;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-25-查询所有教师信息-按教师编号升序排列"><a href="#1-25-查询所有教师信息-按教师编号升序排列" class="headerlink" title="1-25 查询所有教师信息,按教师编号升序排列"></a>1-25 <strong>查询所有教师信息,按教师编号升序排列</strong></h2><p>本题目要求编写SQL语句，查询<code>Teacher</code>表中所有教师信息,按教师编号升序排列。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-24"><a href="#表结构-24" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> Teacher(</span><br><span class="line">TeacherID   <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,     <span class="comment">--教师编号</span></span><br><span class="line">Teachername <span class="type">char</span>(<span class="number">12</span>) <span class="keyword">not</span> <span class="keyword">null</span>,       <span class="comment">--教师姓名</span></span><br><span class="line">Sex  <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">check</span>(sex <span class="keyword">in</span>(<span class="string">&#x27;男&#x27;</span>,<span class="string">&#x27;女&#x27;</span>)),  <span class="comment">--教师性别</span></span><br><span class="line">Brith datetime ,                                 <span class="comment">--出生日期</span></span><br><span class="line">Profession <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">check</span>(profession <span class="keyword">in</span>(<span class="string">&#x27;教授&#x27;</span>,<span class="string">&#x27;副教授&#x27;</span>,<span class="string">&#x27;讲师&#x27;</span>,<span class="string">&#x27;助教&#x27;</span>)),  <span class="comment">--职称</span></span><br><span class="line">Telephone <span class="type">varchar</span>(<span class="number">20</span>),                          <span class="comment">--联系电话</span></span><br><span class="line">HomeAddr <span class="type">varchar</span>(<span class="number">50</span>),                           <span class="comment">--家庭地址</span></span><br><span class="line">DepartmentID <span class="type">char</span>(<span class="number">4</span>)                            <span class="comment">--系部编号</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-24"><a href="#表样例-24" class="headerlink" title="表样例"></a>表样例</h3><p>&#96;&#96;Teacher&#96;&#96;&#96;表：</p>
+<p><img src="https://images.ptausercontent.com/c6a16b18-bfb6-44e1-932e-9bd472fd89f2.PNG" alt="Teacher表.PNG"></p>
+<h3 id="输出样例-24"><a href="#输出样例-24" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/cb19c0b2-3b30-42c1-91c4-55d4d6098229.PNG" alt="Teacher表.PNG"></p>
+<h2 id="代码：-24"><a href="#代码：-24" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> Teacher <span class="keyword">order</span> <span class="keyword">by</span> TeacherID;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-26-查询出出生日期最大（即年龄最小）的学生姓名及出生日期。"><a href="#1-26-查询出出生日期最大（即年龄最小）的学生姓名及出生日期。" class="headerlink" title="1-26 查询出出生日期最大（即年龄最小）的学生姓名及出生日期。"></a>1-26 <strong>查询出出生日期最大（即年龄最小）的学生姓名及出生日期。</strong></h2><p>这是一个SQL编程题模板。本题目要求编写SQL语句，<br>查询<code>Student</code>表中出出生日期最大（即年龄最小）的学生姓名及出生日期。。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-25"><a href="#表结构-25" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> Student(</span><br><span class="line">StudentID   <span class="type">char</span>(<span class="number">12</span>) <span class="keyword">primary</span> key,</span><br><span class="line">StudentName <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">Sex  <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span> ,</span><br><span class="line">Birth  datetime <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">HomeAddr <span class="type">varchar</span>(<span class="number">80</span>),</span><br><span class="line">EntranceTime datetime <span class="keyword">default</span> getdate(),</span><br><span class="line">ClassID <span class="type">char</span>(<span class="number">8</span>) </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-25"><a href="#表样例-25" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>Student</code>表：</p>
+<p><img src="https://images.ptausercontent.com/6ab3de80-02b1-49d1-875d-07f12ebc8c49.PNG" alt="Student表.PNG"></p>
+<h3 id="输出样例-25"><a href="#输出样例-25" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/b2569ed7-ccee-4736-8e42-b78673900b7b.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-25"><a href="#代码：-25" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> StudentName,Birth <span class="keyword">from</span> Student <span class="keyword">where</span> Birth <span class="keyword">in</span> (<span class="keyword">select</span> <span class="built_in">max</span>(Birth) <span class="keyword">from</span> Student);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-27-查询学生人数大于5人的班级编号"><a href="#1-27-查询学生人数大于5人的班级编号" class="headerlink" title="1-27 查询学生人数大于5人的班级编号"></a>1-27 <strong>查询学生人数大于5人的班级编号</strong></h2><p>这是一个SQL编程题模板。本题目要求编写SQL语句，查询<code>Class</code>表中学生人数大于5人的班级编号。</p>
+<p>提示：请使用SELECT语句作答。</p>
+<h3 id="表结构-26"><a href="#表结构-26" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> Class(</span><br><span class="line">ClassID   <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,    <span class="comment">--班级编号</span></span><br><span class="line">ClassName <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,   <span class="comment">--班级名称</span></span><br><span class="line">Monitor  <span class="type">char</span>(<span class="number">8</span>),                 <span class="comment">--班长姓名</span></span><br><span class="line">StudentNum <span class="type">int</span> ,                  <span class="comment">-- 学生人数</span></span><br><span class="line">DepartmentID <span class="type">char</span>(<span class="number">4</span>)              <span class="comment">-- 系部编号</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-26"><a href="#表样例-26" class="headerlink" title="表样例"></a>表样例</h3><p><code>Class</code>表：</p>
+<p><img src="https://images.ptausercontent.com/a691ba1c-ed20-4445-8970-0d108c8a73ae.PNG" alt="Class表.PNG"></p>
+<h3 id="输出样例-26"><a href="#输出样例-26" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/8d8e524d-a674-421b-834b-f97a064b1961.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-26"><a href="#代码：-26" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ClassID <span class="keyword">from</span> Class <span class="keyword">where</span> StudentNum <span class="operator">&gt;</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-28-查询课程“Dp010001”的最高分"><a href="#1-28-查询课程“Dp010001”的最高分" class="headerlink" title="1-28 查询课程“Dp010001”的最高分"></a>1-28 <strong>查询课程“Dp010001”的最高分</strong></h2><p>这是一个SQL编程题模板。本题目要求编写SQL语句，<br>查询<code>Grade</code>表中课程“Dp010001”的最高分。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-27"><a href="#表结构-27" class="headerlink" title="表结构:"></a>表结构:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> Grade(</span><br><span class="line">CourseID   <span class="type">char</span>(<span class="number">8</span>) ,    <span class="comment">--班级编号</span></span><br><span class="line">StudentID <span class="type">char</span>(<span class="number">12</span>) ,    <span class="comment">--学号</span></span><br><span class="line">Semester  <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>, <span class="comment">--学期</span></span><br><span class="line">SchoolYear <span class="type">int</span> ,        <span class="comment">--学年</span></span><br><span class="line">Grade <span class="type">numeric</span>(<span class="number">5</span>,<span class="number">1</span>),     <span class="comment">--成绩</span></span><br><span class="line"><span class="keyword">primary</span> key(CourseID,StudentID)  </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-27"><a href="#表样例-27" class="headerlink" title="表样例"></a>表样例</h3><p><code>Grade</code>表：</p>
+<p><img src="https://images.ptausercontent.com/4c4c7dfe-1599-48cd-904f-14910295bfa1.PNG" alt="Grade表第1部分.PNG"></p>
+<p><img src="https://images.ptausercontent.com/debe1c14-a547-4366-96be-d5b396c9b809.PNG" alt="Grade表第2部分.PNG"></p>
+<p><img src="https://images.ptausercontent.com/d3d155c2-eb1c-4fe4-9c7c-a71e97fcc465.PNG" alt="Grade表第3部分.PNG"></p>
+<h3 id="输出样例-27"><a href="#输出样例-27" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/76ec6859-fc7d-46d5-814e-4508108e1a4b.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-27"><a href="#代码：-27" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">max</span>(grade) <span class="keyword">as</span> max_grade <span class="keyword">from</span> Grade <span class="keyword">where</span> CourseID <span class="operator">=</span> <span class="string">&#x27;Dp010001&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-29-查询课程“Dp010004”的学生学号和成绩，并按成绩降序排列，成绩相同按学号升序排列"><a href="#1-29-查询课程“Dp010004”的学生学号和成绩，并按成绩降序排列，成绩相同按学号升序排列" class="headerlink" title="1-29 查询课程“Dp010004”的学生学号和成绩，并按成绩降序排列，成绩相同按学号升序排列"></a>1-29 <strong>查询课程“Dp010004”的学生学号和成绩，并按成绩降序排列，成绩相同按学号升序排列</strong></h2><p>这是一个SQL编程题模板。本题目要求编写SQL语句，<br>查询<code>Grade</code>表中课程“Dp010004”的学生学号和成绩，并按成绩降序排列，成绩相同按学号升序排列。</p>
+<p>提示：请使用<code>SELECT</code>语句作答。</p>
+<h3 id="表结构-28"><a href="#表结构-28" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> Grade(</span><br><span class="line">CourseID   <span class="type">char</span>(<span class="number">8</span>) ,</span><br><span class="line">StudentID <span class="type">char</span>(<span class="number">12</span>) ,</span><br><span class="line">Semester  <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">SchoolYear <span class="type">int</span> ,</span><br><span class="line">Grade <span class="type">numeric</span>(<span class="number">5</span>,<span class="number">1</span>),</span><br><span class="line"><span class="keyword">primary</span> key(CourseID,StudentID)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-28"><a href="#表样例-28" class="headerlink" title="表样例"></a>表样例</h3><p><code>Grade</code>表：</p>
+<p><img src="https://images.ptausercontent.com/661c3086-9d33-4718-bacb-e38056d1c4e4.PNG" alt="Grade表第1部分.PNG"></p>
+<p><img src="https://images.ptausercontent.com/df85b11c-474b-492b-8174-984f7e9c911b.PNG" alt="Grade表第2部分.PNG"></p>
+<p><img src="https://images.ptausercontent.com/d208a14e-2b4e-4ef7-9220-ba5e3bc4f667.PNG" alt="Grade表第3部分.PNG"></p>
+<h3 id="输出样例-28"><a href="#输出样例-28" class="headerlink" title="输出样例:"></a>输出样例:</h3><p><img src="https://images.ptausercontent.com/ac4e30a1-b90d-42ec-bd20-1a2694d4742d.PNG" alt="答案.PNG"></p>
+<h2 id="代码：-28"><a href="#代码：-28" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> StudentID,Grade <span class="keyword">from</span> Grade <span class="keyword">where</span> CourseID <span class="operator">=</span> <span class="string">&#x27;Dp010004&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> Grade <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-30-查询选修课名中含有“数据库”三个字的课程且成绩在80～90分之间的学生学号及成绩"><a href="#1-30-查询选修课名中含有“数据库”三个字的课程且成绩在80～90分之间的学生学号及成绩" class="headerlink" title="1-30 查询选修课名中含有“数据库”三个字的课程且成绩在80～90分之间的学生学号及成绩"></a>1-30 <strong>查询选修课名中含有“数据库”三个字的课程且成绩在80～90分之间的学生学号及成绩</strong></h2><p>本题目要求编写SQL语句，<br>检索出<code>sc</code>表、<code>course</code>表中选修课名中含有“数据库”三个字的课程且成绩在80～90分之间的学生学号及成绩。</p>
+<p>提示：请使用join连接作答。</p>
+<h3 id="表结构-29"><a href="#表结构-29" class="headerlink" title="表结构:"></a>表结构:</h3><p>请在这里写定义表结构的SQL语句。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> course (</span><br><span class="line"> cno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line"> cname <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  cpno <span class="type">char</span>(<span class="number">7</span>),</span><br><span class="line">  ccredit <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (cno)</span><br><span class="line">) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> sc (</span><br><span class="line"> sno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line"> cno <span class="type">char</span>(<span class="number">7</span>) ,</span><br><span class="line"> score <span class="type">decimal</span>(<span class="number">4</span>,<span class="number">1</span>),</span><br><span class="line"> point <span class="type">decimal</span>(<span class="number">2</span>,<span class="number">1</span>),</span><br><span class="line"> <span class="keyword">PRIMARY</span> KEY (sno,cno)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表样例-29"><a href="#表样例-29" class="headerlink" title="表样例"></a>表样例</h3><p>请在这里给出上述表结构对应的表样例。例如</p>
+<p><code>course</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>cno</th>
+<th>cname</th>
+<th>cpno</th>
+<th>ccredit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000002</td>
+<td>C语言基础</td>
+<td>0000027</td>
+<td>9</td>
+</tr>
+<tr>
+<td>0000003</td>
+<td>Linux操作系统</td>
+<td>0000013</td>
+<td>5</td>
+</tr>
+<tr>
+<td>0000004</td>
+<td>C#程序设计</td>
+<td>0000002</td>
+<td>6</td>
+</tr>
+<tr>
+<td>0000052</td>
+<td>数据库OCP考证</td>
+<td>NULL</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p><code>sc</code>表：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>cno</th>
+<th>score</th>
+<th>point</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1311104</td>
+<td>0000011</td>
+<td>53.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>1311104</td>
+<td>0000027</td>
+<td>80.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1311105</td>
+<td>0000027</td>
+<td>84.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1711101</td>
+<td>0000052</td>
+<td>81.0</td>
+<td>2.0</td>
+</tr>
+</tbody></table>
+<h3 id="输出样例-29"><a href="#输出样例-29" class="headerlink" title="输出样例:"></a>输出样例:</h3><p>请在这里给出输出样例。例如：</p>
+<table>
+<thead>
+<tr>
+<th>sno</th>
+<th>score</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1711101</td>
+<td>81.0</td>
+</tr>
+</tbody></table>
+<h2 id="代码：-29"><a href="#代码：-29" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sno,score <span class="keyword">from</span> sc a <span class="keyword">join</span> course b <span class="keyword">on</span> a.cno <span class="operator">=</span> b.cno <span class="keyword">where</span> cname <span class="keyword">like</span> <span class="string">&#x27;%数据库%&#x27;</span> <span class="keyword">and</span> score <span class="operator">&gt;=</span> <span class="number">80</span> <span class="keyword">and</span> score <span class="operator">&lt;=</span> <span class="number">90</span>;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Small-J</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/04/24/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/">http://example.com/2022/04/24/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Small-J</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="/img/MySQL-Exercises.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/04/24/MySQL/"><img class="next-cover" src="/img/MySQL.gif" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL自学习笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/04/24/MySQL/" title="MySQL自学习笔记"><img class="cover" src="/img/MySQL.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-24</div><div class="title">MySQL自学习笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Small-J</div><div class="author-info__description">低头哭过别忘了抬头继续走</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Myability-component/Myability-component.github.io.git"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Myability-component" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1875285962@qq.com" target="_blank" title="Email"><i class="fas fa-envelope-open-text"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是 Small-J 的博客！<img src="/img/momo.gif"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">MySQL练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A"><span class="toc-number">1.0.1.</span> <span class="toc-text">前言：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%89%BE%E5%87%BA%E6%89%80%E6%9C%89%E5%A7%93%E2%80%9C%E6%9D%8E%E2%80%9D%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E3%80%81%E6%B0%91%E6%97%8F%E5%92%8C%E8%81%94%E7%B3%BB%E7%94%B5%E8%AF%9D%E3%80%82"><span class="toc-number">1.1.</span> <span class="toc-text">1-1 找出所有姓“李”的学生姓名、民族和联系电话。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2"><span class="toc-number">1.1.1.</span> <span class="toc-text">题干:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.2.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%9F%A5%E8%AF%A2%E9%80%89%E4%BF%AE%E4%BA%862%E9%97%A8%E4%BB%A5%E4%B8%8A%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E3%80%82"><span class="toc-number">1.3.</span> <span class="toc-text">1-2 查询选修了2门以上课程的学生学号和平均成绩。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">题干:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-1"><span class="toc-number">1.3.4.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-1"><span class="toc-number">1.4.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E7%BB%9F%E8%AE%A1%E6%AF%8F%E7%A7%8D%E5%95%86%E5%93%81%E7%9A%84%E9%94%80%E5%94%AE%E6%95%B0%E9%87%8F%E3%80%82"><span class="toc-number">1.5.</span> <span class="toc-text">1-3 统计每种商品的销售数量。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2-2"><span class="toc-number">1.5.1.</span> <span class="toc-text">题干:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-2"><span class="toc-number">1.5.2.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-2"><span class="toc-number">1.5.3.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-2"><span class="toc-number">1.5.4.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-2"><span class="toc-number">1.6.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E6%9F%A5%E8%AF%A2%E5%89%8D3%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E8%AF%BE%E5%8F%B7%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%90%8D%E7%A7%B0"><span class="toc-number">1.7.</span> <span class="toc-text">1-4 查询前3门课程的课号及课程名称</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-3"><span class="toc-number">1.7.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-3"><span class="toc-number">1.7.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-3"><span class="toc-number">1.7.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-3"><span class="toc-number">1.8.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E6%9F%A5%E8%AF%A2%E5%90%8D%E5%AD%97%E4%B8%AD%E5%90%AB%E6%9C%89%E2%80%9C%E6%98%8E%E2%80%9D%E5%AD%97%E7%9A%84%E7%94%B7%E7%94%9F%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E7%8F%AD%E7%BA%A7"><span class="toc-number">1.9.</span> <span class="toc-text">1-5 查询名字中含有“明”字的男生的学生姓名和班级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-4"><span class="toc-number">1.9.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-4"><span class="toc-number">1.9.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-4"><span class="toc-number">1.9.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-4"><span class="toc-number">1.10.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-%E6%9F%A5%E8%AF%A2%E5%A7%93%E5%90%8D%E6%98%AF%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%9A%84%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">1.11.</span> <span class="toc-text">1-6 查询姓名是两个字的学生信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-5"><span class="toc-number">1.11.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-5"><span class="toc-number">1.11.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-5"><span class="toc-number">1.11.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-5"><span class="toc-number">1.12.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7-%E8%AE%A1%E7%AE%97%E2%80%9C0000001%E2%80%9D%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%B9%B3%E5%9D%87%E5%88%86%E3%80%81%E6%9C%80%E9%AB%98%E5%88%86%E5%92%8C%E6%9C%80%E4%BD%8E%E5%88%86"><span class="toc-number">1.13.</span> <span class="toc-text">1-7 计算“0000001”课程的平均分、最高分和最低分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-6"><span class="toc-number">1.13.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-6"><span class="toc-number">1.13.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-6"><span class="toc-number">1.13.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-6"><span class="toc-number">1.14.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-8-%E7%BB%9F%E8%AE%A1%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E7%9A%84%E9%80%89%E8%AF%BE%E9%97%A8%E6%95%B0%E5%92%8C%E8%80%83%E8%AF%95%E6%80%BB%E6%88%90%E7%BB%A9%EF%BC%8C%E5%B9%B6%E6%8C%89%E9%80%89%E8%AF%BE%E9%97%A8%E6%95%B0%E5%8D%87%E5%BA%8F%E6%8E%92%E5%88%97"><span class="toc-number">1.15.</span> <span class="toc-text">1-8 统计每个学生的选课门数和考试总成绩，并按选课门数升序排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-7"><span class="toc-number">1.15.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-7"><span class="toc-number">1.15.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-7"><span class="toc-number">1.15.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-7"><span class="toc-number">1.16.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-9-%E6%98%BE%E7%A4%BA%E6%88%AA%E6%AD%A2%E5%88%B02021%E5%B9%B49%E6%9C%881%E6%97%A5%E4%B8%BA%E6%AD%A2%E5%B9%B4%E6%BB%A124%E5%91%A8%E5%B2%81%E7%9A%84%E7%94%B7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E3%80%82"><span class="toc-number">1.17.</span> <span class="toc-text">1-9 显示截止到2021年9月1日为止年满24周岁的男学生信息。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-8"><span class="toc-number">1.17.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-8"><span class="toc-number">1.17.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-8"><span class="toc-number">1.17.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-8"><span class="toc-number">1.18.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-10-%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%EF%BC%8C%E5%85%88%E6%8C%89%E5%95%86%E5%93%81%E5%88%86%E7%B1%BB%E5%8D%87%E5%BA%8F%E6%8E%92%E5%88%97%EF%BC%8C%E5%86%8D%E6%8C%89%E5%95%86%E5%93%81%E4%BB%B7%E6%A0%BC%E9%99%8D%E5%BA%8F%E6%8E%92%E5%88%97"><span class="toc-number">1.19.</span> <span class="toc-text">1-10 查询商品表，先按商品分类升序排列，再按商品价格降序排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-9"><span class="toc-number">1.19.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-9"><span class="toc-number">1.19.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-9"><span class="toc-number">1.19.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-9"><span class="toc-number">1.20.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-11-%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E6%AF%8F%E9%A1%B9%E5%85%B3%E9%94%AE%E8%AF%8D%E5%AF%B9%E5%BA%94%E7%9A%84%E5%95%86%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.21.</span> <span class="toc-text">1-11 查询商品表中每项关键词对应的商品数量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-10"><span class="toc-number">1.21.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-10"><span class="toc-number">1.21.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-10"><span class="toc-number">1.21.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-10"><span class="toc-number">1.22.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-12-%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E9%83%A8%E5%88%86%E5%AD%97%E6%AE%B5"><span class="toc-number">1.23.</span> <span class="toc-text">1-12 查询商品表中部分字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-11"><span class="toc-number">1.23.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-11"><span class="toc-number">1.23.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-11"><span class="toc-number">1.23.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-11"><span class="toc-number">1.24.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-13-%E8%8E%B7%E5%8F%96%E6%AF%8F%E4%B8%AA%E5%88%86%E7%B1%BB%E4%B8%8B%E5%95%86%E5%93%81%E7%9A%84%E6%9C%80%E9%AB%98%E4%BB%B7%E6%A0%BC"><span class="toc-number">1.25.</span> <span class="toc-text">1-13 获取每个分类下商品的最高价格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-12"><span class="toc-number">1.25.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-12"><span class="toc-number">1.25.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-12"><span class="toc-number">1.25.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-12"><span class="toc-number">1.26.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-14-%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E5%95%86%E5%93%81%E5%BA%93%E5%AD%98%E7%9A%84%E6%9C%80%E9%AB%98%E5%92%8C%E6%9C%80%E4%BD%8E%E5%80%BC"><span class="toc-number">1.27.</span> <span class="toc-text">1-14 查询商品表中商品库存的最高和最低值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-13"><span class="toc-number">1.27.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-13"><span class="toc-number">1.27.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-13"><span class="toc-number">1.27.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-13"><span class="toc-number">1.28.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-15-%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E6%9D%A1%E4%BB%B6%E5%95%86%E5%93%81%E7%9A%84%E5%B9%B3%E5%9D%87%E4%BB%B7%E6%A0%BC"><span class="toc-number">1.29.</span> <span class="toc-text">1-15 获取指定条件商品的平均价格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-14"><span class="toc-number">1.29.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-14"><span class="toc-number">1.29.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-14"><span class="toc-number">1.29.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-14"><span class="toc-number">1.30.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-16-%E5%95%86%E5%93%81%E8%A1%A8%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E4%B8%AD%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.31.</span> <span class="toc-text">1-16 商品表查询语句中运算符的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-15"><span class="toc-number">1.31.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-15"><span class="toc-number">1.31.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-15"><span class="toc-number">1.31.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-15"><span class="toc-number">1.32.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-17-%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E6%8C%87%E5%AE%9A%E4%BB%B7%E6%A0%BC%E8%8C%83%E5%9B%B4%E7%9A%84%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF"><span class="toc-number">1.33.</span> <span class="toc-text">1-17 查询商品表中指定价格范围的商品信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-16"><span class="toc-number">1.33.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-16"><span class="toc-number">1.33.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-16"><span class="toc-number">1.33.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-16"><span class="toc-number">1.34.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-18-%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E5%88%A4%E6%96%AD%E5%AD%97%E6%AE%B5%E6%98%AF%E5%90%A6%E4%B8%BANULL"><span class="toc-number">1.35.</span> <span class="toc-text">1-18 商品表中判断字段是否为NULL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-17"><span class="toc-number">1.35.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-17"><span class="toc-number">1.35.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-17"><span class="toc-number">1.35.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-17"><span class="toc-number">1.36.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-19-%E8%8E%B7%E5%8F%96%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E5%95%86%E5%93%81%E5%90%8D%E7%A7%B0%E5%90%AB%E6%9C%89%E2%80%9Cpad%E2%80%9D%E7%9A%84%E5%95%86%E5%93%81"><span class="toc-number">1.37.</span> <span class="toc-text">1-19 获取商品表中商品名称含有“pad”的商品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-18"><span class="toc-number">1.37.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-18"><span class="toc-number">1.37.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-18"><span class="toc-number">1.37.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-18"><span class="toc-number">1.38.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-19-%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E6%8C%87%E5%AE%9A%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF%EF%BC%88%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-number">1.39.</span> <span class="toc-text">1-19 查询商品表中指定条件的商品信息（多条件查询）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-19"><span class="toc-number">1.39.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-19"><span class="toc-number">1.39.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-19"><span class="toc-number">1.39.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-19"><span class="toc-number">1.40.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-21%E6%9F%A5%E8%AF%A2%E5%95%86%E5%93%81%E8%A1%A8%E4%B8%AD%E6%8C%87%E5%AE%9A%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF%EF%BC%88%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-number">1.41.</span> <span class="toc-text">1-21查询商品表中指定条件的商品信息（多条件查询）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-20"><span class="toc-number">1.41.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-20"><span class="toc-number">1.41.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-20"><span class="toc-number">1.41.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-20"><span class="toc-number">1.42.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-22-%E7%BB%9F%E8%AE%A1%E6%AF%8F%E4%B8%AA%E5%AD%A6%E9%99%A2%E7%9A%84%E5%AD%A6%E7%94%9F%E6%80%BB%E4%BA%BA%E6%95%B0%EF%BC%8C%E5%B9%B6%E6%8C%89%E4%BA%BA%E6%95%B0%E9%99%8D%E5%BA%8F%E6%8E%92%E5%88%97%E3%80%82"><span class="toc-number">1.43.</span> <span class="toc-text">1-22 统计每个学院的学生总人数，并按人数降序排列。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2-3"><span class="toc-number">1.43.1.</span> <span class="toc-text">题干:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-21"><span class="toc-number">1.43.2.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-21"><span class="toc-number">1.43.3.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-21"><span class="toc-number">1.43.4.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-21"><span class="toc-number">1.44.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-23-%E6%9F%A5%E8%AF%A2%E9%80%89%E4%BF%AE%E4%BA%862%E9%97%A8%E4%BB%A5%E4%B8%8A%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E3%80%82"><span class="toc-number">1.45.</span> <span class="toc-text">1-23  查询选修了2门以上课程的学生学号和平均成绩。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2-4"><span class="toc-number">1.45.1.</span> <span class="toc-text">题干:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-22"><span class="toc-number">1.45.2.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-22"><span class="toc-number">1.45.3.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-22"><span class="toc-number">1.45.4.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-22"><span class="toc-number">1.46.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-24-%E5%9C%A8%E6%95%99%E5%B8%88%E8%A1%A8%E4%B8%AD%E6%9F%A5%E8%AF%A2%E5%87%BA%E6%89%80%E6%9C%89%E6%95%99%E5%B8%88%E6%89%80%E5%9C%A8%E9%83%A8%E9%97%A8%E7%BC%96%E5%8F%B7%EF%BC%8C%E5%B9%B6%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E8%AE%B0%E5%BD%95%E3%80%82"><span class="toc-number">1.47.</span> <span class="toc-text">1-24 在教师表中查询出所有教师所在部门编号，并消除重复记录。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-23"><span class="toc-number">1.47.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-23"><span class="toc-number">1.47.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-23"><span class="toc-number">1.47.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-23"><span class="toc-number">1.48.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-25-%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%95%99%E5%B8%88%E4%BF%A1%E6%81%AF-%E6%8C%89%E6%95%99%E5%B8%88%E7%BC%96%E5%8F%B7%E5%8D%87%E5%BA%8F%E6%8E%92%E5%88%97"><span class="toc-number">1.49.</span> <span class="toc-text">1-25 查询所有教师信息,按教师编号升序排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-24"><span class="toc-number">1.49.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-24"><span class="toc-number">1.49.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-24"><span class="toc-number">1.49.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-24"><span class="toc-number">1.50.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-26-%E6%9F%A5%E8%AF%A2%E5%87%BA%E5%87%BA%E7%94%9F%E6%97%A5%E6%9C%9F%E6%9C%80%E5%A4%A7%EF%BC%88%E5%8D%B3%E5%B9%B4%E9%BE%84%E6%9C%80%E5%B0%8F%EF%BC%89%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%8F%8A%E5%87%BA%E7%94%9F%E6%97%A5%E6%9C%9F%E3%80%82"><span class="toc-number">1.51.</span> <span class="toc-text">1-26 查询出出生日期最大（即年龄最小）的学生姓名及出生日期。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-25"><span class="toc-number">1.51.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-25"><span class="toc-number">1.51.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-25"><span class="toc-number">1.51.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-25"><span class="toc-number">1.52.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-27-%E6%9F%A5%E8%AF%A2%E5%AD%A6%E7%94%9F%E4%BA%BA%E6%95%B0%E5%A4%A7%E4%BA%8E5%E4%BA%BA%E7%9A%84%E7%8F%AD%E7%BA%A7%E7%BC%96%E5%8F%B7"><span class="toc-number">1.53.</span> <span class="toc-text">1-27 查询学生人数大于5人的班级编号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-26"><span class="toc-number">1.53.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-26"><span class="toc-number">1.53.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-26"><span class="toc-number">1.53.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-26"><span class="toc-number">1.54.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-28-%E6%9F%A5%E8%AF%A2%E8%AF%BE%E7%A8%8B%E2%80%9CDp010001%E2%80%9D%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%86"><span class="toc-number">1.55.</span> <span class="toc-text">1-28 查询课程“Dp010001”的最高分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-27"><span class="toc-number">1.55.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-27"><span class="toc-number">1.55.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-27"><span class="toc-number">1.55.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-27"><span class="toc-number">1.56.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-29-%E6%9F%A5%E8%AF%A2%E8%AF%BE%E7%A8%8B%E2%80%9CDp010004%E2%80%9D%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E6%88%90%E7%BB%A9%EF%BC%8C%E5%B9%B6%E6%8C%89%E6%88%90%E7%BB%A9%E9%99%8D%E5%BA%8F%E6%8E%92%E5%88%97%EF%BC%8C%E6%88%90%E7%BB%A9%E7%9B%B8%E5%90%8C%E6%8C%89%E5%AD%A6%E5%8F%B7%E5%8D%87%E5%BA%8F%E6%8E%92%E5%88%97"><span class="toc-number">1.57.</span> <span class="toc-text">1-29 查询课程“Dp010004”的学生学号和成绩，并按成绩降序排列，成绩相同按学号升序排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-28"><span class="toc-number">1.57.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-28"><span class="toc-number">1.57.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-28"><span class="toc-number">1.57.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-28"><span class="toc-number">1.58.</span> <span class="toc-text">代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-30-%E6%9F%A5%E8%AF%A2%E9%80%89%E4%BF%AE%E8%AF%BE%E5%90%8D%E4%B8%AD%E5%90%AB%E6%9C%89%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E2%80%9D%E4%B8%89%E4%B8%AA%E5%AD%97%E7%9A%84%E8%AF%BE%E7%A8%8B%E4%B8%94%E6%88%90%E7%BB%A9%E5%9C%A880%EF%BD%9E90%E5%88%86%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%8F%8A%E6%88%90%E7%BB%A9"><span class="toc-number">1.59.</span> <span class="toc-text">1-30 查询选修课名中含有“数据库”三个字的课程且成绩在80～90分之间的学生学号及成绩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84-29"><span class="toc-number">1.59.1.</span> <span class="toc-text">表结构:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%B7%E4%BE%8B-29"><span class="toc-number">1.59.2.</span> <span class="toc-text">表样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B-29"><span class="toc-number">1.59.3.</span> <span class="toc-text">输出样例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-29"><span class="toc-number">1.60.</span> <span class="toc-text">代码：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/24/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/" title="MySQL练习题"><img src="/img/MySQL-Exercises.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL练习题"/></a><div class="content"><a class="title" href="/2022/04/24/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/" title="MySQL练习题">MySQL练习题</a><time datetime="2022-04-24T09:22:18.017Z" title="发表于 2022-04-24 17:22:18">2022-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/24/MySQL/" title="MySQL自学习笔记"><img src="/img/MySQL.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL自学习笔记"/></a><div class="content"><a class="title" href="/2022/04/24/MySQL/" title="MySQL自学习笔记">MySQL自学习笔记</a><time datetime="2022-04-24T01:49:22.961Z" title="发表于 2022-04-24 09:49:22">2022-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/21/ACBS/" title="ACBS"><img src="/img/ACBS.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ACBS"/></a><div class="content"><a class="title" href="/2022/04/21/ACBS/" title="ACBS">ACBS</a><time datetime="2022-04-21T10:53:18.227Z" title="发表于 2022-04-21 18:53:18">2022-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/19/pta%EF%BC%88c%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%89/" title="C Language"><img src="/img/C%20Language.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C Language"/></a><div class="content"><a class="title" href="/2022/04/19/pta%EF%BC%88c%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%89/" title="C Language">C Language</a><time datetime="2022-04-19T12:40:29.589Z" title="发表于 2022-04-19 20:40:29">2022-04-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/19/C%20Language-Data%20structure%20and%20algorithm/" title="C Language-Data structure and algorithm"><img src="/img/datastruct.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C Language-Data structure and algorithm"/></a><div class="content"><a class="title" href="/2022/04/19/C%20Language-Data%20structure%20and%20algorithm/" title="C Language-Data structure and algorithm">C Language-Data structure and algorithm</a><time datetime="2022-04-19T12:40:29.586Z" title="发表于 2022-04-19 20:40:29">2022-04-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Small-J</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
